@@ -36,8 +36,8 @@ applicationRouter.get('/',async (req, res) => {
 applicationRouter.post(
   '/signin',
   (async (req, res) => {
-    const student = await student.findOne({ email: req.body.email });
-    const application= await application.findOne({})
+    const student = await Student.findOne({ email: req.body.email });
+    const application= await Application.findOne({})
     if (student) {
         
       if (req.body.userName, student.userName) {
