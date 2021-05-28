@@ -87,8 +87,6 @@ applicationRouter.put(
   (async (req, res) => {
     const application = await Application.findById(req.params.id);
     if (application) {
-        
-      application.student = req.body.student || application.student;
       application.program = req.body.program || application.program;
       application.semester = req.body.semester || application.semester;
       const updatedApplication = await application.save();
