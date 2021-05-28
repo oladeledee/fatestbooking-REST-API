@@ -9,15 +9,12 @@ const applicationRouter = express.Router();
 //get  Application details
 applicationRouter.get('/',async (req, res) => {
     const applications=await Application.find();
-    if(applications){
-        
+    if(applications){   
        res.send(applications);
     }
     else{
         res.status(404).send({ message: 'Student application Details Not Found' });
-    }
-    
-      
+    }      
      });
 // get Application by id
      applicationRouter.get(
@@ -32,7 +29,6 @@ applicationRouter.get('/',async (req, res) => {
         })
       );
     
-//sign in  
 //sign in  
 applicationRouter.post(
   '/Login',
