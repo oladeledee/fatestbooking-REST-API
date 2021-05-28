@@ -12,7 +12,11 @@ const studentSchema = new mongoose.Schema({
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        match: [
+      /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
+      "Please add a valid email",
+    ],
     },
     userName:{
         type:String,
@@ -24,6 +28,5 @@ const studentSchema = new mongoose.Schema({
     }
 })
 
-const Student = mongoose.model('Student', studentSchema);
-exports.studentSchema=studentSchema;
-exports.Student=  Student;
+
+module.exports = mongoose.model('Student', studentSchema);
