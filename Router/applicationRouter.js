@@ -43,7 +43,6 @@ applicationRouter.post(
       if (req.body.userName, student.userName) {
         if(application){
             res.send({
-                
                 student:application.student,
                 program:application.program, 
                 semester: application.semester,
@@ -62,32 +61,21 @@ applicationRouter.post(
 applicationRouter.post(
   '/register',
   (async (req, res) => {
-    let student_Id=  req.body.student;
+    let student_Id= req.params.id;;
     const student= await Student.findById(student_Id).populate('Student',"-_id");
     console.log(req.params.student);
     if(!student) return res.status(404).send('invalid student Id')
   
     const applications = new Application({
-
      program: req.body.program,
      semester: req.body.semester,
-     
-     student:{
-      firstName: student.firstName,
-      email: student.email,
-      lastName: student.lastName,
-      userName:student.userName,
-      cgpa:student.cgpa,
-  },
+     student:student._id,
         created_at:Date.now(),
         updated_at:Date.now(),
-
     });
     
     const createdApplication = await applications.save();
-    res.send({
-               createdApplication
-    });
+    res.send({createdApplication});
   })
 );
 
