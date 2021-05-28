@@ -1,15 +1,16 @@
-var express = require ( 'express');
-var mongoose= require  ( 'mongoose');
-var applicationRouter = require  (  './Router/applicationRouter');
-var  studentRouter = require  ( './Router/studentRouter');
-
-
-
+const express= require ('express');
+const cors = require('cors');
+const mongoose = require('mongoose');               
+const bodyParser = require('body-parser');
 
 const app = express();
-//middlewares
-app.use(express.json());
 
+// middlewares
+app.use(cors());
+app.use(bodyParser.urlencoded(
+    {extended:false}
+));
+app.use(bodyParser.json());
 //db config
 mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/fatestbooking', {
   useNewUrlParser: true,
@@ -17,16 +18,10 @@ mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/fatestbooking',
   useCreateIndex: true,
 });
 
-//routes
-app.use('/api/application', applicationRouter);
-app.use('/api/student', studentRouter);
-
-app.use((err, req, res, next) => {
-  res.status(500).send({ message: err.message });
-});
-
-const port = process.env.PORT || 8000;
-app.listen(port, () => {
-  console.log(`Serve at http://localhost:${port}`);
-});
-
+    //route
+    app.use(require('./route/applicationRoute'));
+    app.use(require('./route/studentRoute'))
+    const port = process.env.PORT || 6000;
+    app.listen(port, () => {
+      console.log(`Serve at http://localhost:${port}`);
+    });
