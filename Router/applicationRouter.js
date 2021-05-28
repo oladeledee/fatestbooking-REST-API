@@ -33,29 +33,23 @@ applicationRouter.get('/',async (req, res) => {
       );
     
 //sign in  
+//sign in  
 applicationRouter.post(
-  '/signin',
+  '/Login',
   (async (req, res) => {
     const student = await Student.findOne({ email: req.body.email });
     const application= await Application.findOne({})
     if (student) {
-        
       if (req.body.userName, student.userName) {
         if(application){
             res.send({
-                student:application.student,
-                program:application.program, 
-                semester: application.semester,
-                created_at:application.created_at,
-                updated_at:application.updated_at,
+                student:student.firstName,
+                application
               });
               return;
-        }
-        
-      }
+        } }
     }
-    res.status(401).send({ message: 'Invalid email or username' });
-  })
+    res.status(401).send({ message: 'Invalid email or username' });})
 );
 //  new application  detail
 applicationRouter.post(
