@@ -55,15 +55,12 @@ applicationRouter.post(
     const student= await Student.findById(student_Id).populate('Student',"-_id");
     console.log(req.params.student);
     if(!student) return res.status(404).send('invalid student Id')
-  
+      
     const applications = new Application({
      program: req.body.program,
      semester: req.body.semester,
      student:student._id,
-        created_at:Date.now(),
-        updated_at:Date.now(),
     });
-    
     const createdApplication = await applications.save();
     res.send({createdApplication});
   })
