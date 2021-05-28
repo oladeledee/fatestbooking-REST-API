@@ -2,10 +2,12 @@ const express= require ('express');
 const cors = require('cors');
 const mongoose = require('mongoose');               
 const bodyParser = require('body-parser');
+const errorMiddlewares= require('./middlewares/errorMiddleware');
 
 const app = express();
 
 // middlewares
+errorMiddlewares(app);
 app.use(cors());
 app.use(bodyParser.urlencoded(
     {extended:false}
