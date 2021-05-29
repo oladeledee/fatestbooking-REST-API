@@ -1,25 +1,29 @@
-const Application= require('../../model/application');
-const student = require('../../model/student');
+const {Application}= require('../../model/application');
+const {student}= require('../../model/student');
 
 module.exports = {
 
 create: async(req,res)=>{
-    let {id}=  req.params.id;
-    const student= await Student.findOne(id).populate('Student');
+   let student_Id=  req.params.id;
+    const student= await Student.findOne(student_Id);
     console.log(student);
-    
-    const applications = new Application({
-     program: req.body.program,
-     semester: req.body.semester,
-     student:student.id
-    });
-    const apk=  applications.populate('student');
-    const createdApplication =  await apk.save();
-    res.send({createdApplication});
+    if(student){ 
+      const{program,semester}= req.body;
+      const applications = new Application({
+      program,
+      semester,
+      student:student._id
+     });
+     console.log(applications);
+       await applications.save();
+     res.send({applications});
+  }
+  else{
+    res.status(404).send({ message: '  Student id isnt valid' });  }
 },
 
 find: async(req,res) =>{
-    const applications=await Application.find();
+    const applications=await Application.find().populate('student');
     if(applications){   
        res.send(applications);
     }
@@ -29,7 +33,7 @@ find: async(req,res) =>{
 },
 
 findById : async(req,res)=>{
-    const {id} = req.params;
+    const {id} = req.params._id;
     const application = await Application.findById(id).populate('student');
           if (application) {
             res.send(application.student);
@@ -55,7 +59,7 @@ update:(async (req, res) => {
 }),
 
 delete: (async(req,res)=>{
-    const {id} = req.params;
+    const {id} = req.params._id;
     const student = await Student.findById(id);
     if (student) {
     
