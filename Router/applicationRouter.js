@@ -10,7 +10,7 @@ router.post('/application/create', application.create);
 // find all applications
 router.get('/application/find',application.find);
 // find application by id
-router.get('/application/find/:id',application.findById);
+router.get('/application/find/student',application.findById);
 //delete application with id
 router.delete('/application/delete/:id',application.delete);
 //update application with id
