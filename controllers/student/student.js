@@ -1,15 +1,17 @@
-const Student= require('../../model/student');
+const {Student}= require('../../model/student');
 
 module.exports = {
 
 create: async(req,res)=>{
-    
-     const student = await Student.Create({
-        firstName:req.body.firstName,
-        lastName:req.body.lastName,
-        email:req.body.email,
-        cgpa:req.body.cgpa
+     const {firstName,lastName,userName,email,cgpa}=req.body;
+     const student = await Student.create({
+        firstName,
+        lastName,
+        userName,
+        email,
+        cgpa
      })
+     await student.save();
      return res.send(student);
 },
 
