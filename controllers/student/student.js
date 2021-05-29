@@ -3,7 +3,8 @@ const {Student}= require('../../model/student');
 module.exports = {
 
 create: async(req,res)=>{
-     const {firstName,lastName,userName,email,cgpa}=req.body;
+  try {
+    const {firstName,lastName,userName,email,cgpa}=req.body;
      const student = await Student.create({
         firstName,
         lastName,
@@ -13,20 +14,50 @@ create: async(req,res)=>{
      })
      await student.save();
      return res.send(student);
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send({message:'internal server error'});
+  }
+    
 },
 
 findAll: async(req,res) =>{
+  try {
     const student = await Student.find()
-    return res.send(student);
+    if(student){
+      return res.send(student);
+    }
+    else {
+      res.status(404).send({ message: 'student Not Found' });
+       }
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send({message:'internal server error'});
+  }
+    
 },
 
+
 findById : async(req,res)=>{
+  try {
     const {id} = req.params;
+
     const student = await Student.findById(id);
-    res.send(student);
+    if(student){
+      res.send(student);
+    }
+    else {
+      res.status(404).send({ message: 'student with the given Not Found' });
+    }
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send({message:'internal server error'});
+  }
+   
 },
 
 update:(async (req, res) => {
+  try {
     const {id} = req.params;
     const student = await Student.findById(id);
     if (student) {    
@@ -42,9 +73,15 @@ update:(async (req, res) => {
     } else {
       res.status(404).send({ message: 'student Details Found' });
     }
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send({message:'internal server error'});
+  }
+    
 }),
 
 delete: (async(req,res)=>{
+  try {
     const {id} = req.params;
     const student = await Student.findById(id);
     if (student) {
@@ -54,7 +91,12 @@ delete: (async(req,res)=>{
       } else {
         res.status(404).send({ message: 'student details Not Found' });
       }
-    }),   
+
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send({message:'internal server error'});
+  }
+        }),   
 }
 
 
