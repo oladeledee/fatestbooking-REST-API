@@ -87,11 +87,11 @@ update:(async (req, res) => {
 delete: (async(req,res)=>{
   try {
     const id = req.params.id;
-    const student = await Student.findById(id);
+    const student = await Application.findById(id);
     if (student) {
     
-        const deletestudent = await student.remove();
-        res.send({ message: ' student data  Deleted', student: deletestudent });
+        const deleteApplication = await Application.remove();
+        res.send({ message: ' Application data  Deleted', student: deleteApplication });
       } else {
         res.status(404).send({ message: 'student details Not Found' });
       }
