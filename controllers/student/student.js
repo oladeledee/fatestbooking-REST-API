@@ -1,9 +1,16 @@
-const {Student}= require('../../model/student');
+const {Student,studentsValidate}= require('../../model/student');
 
 module.exports = {
 
 create: async(req,res)=>{
   try {
+    
+    const { error } = studentsValidate.validate(req.body); 
+    if (error) return res.status(400).send(error.details[0].message);
+  
+    let user = await Student.findOne({email:req.body.email});
+    if(user) return res.status(404).send('student already exist');
+
     const {firstName,lastName,userName,email,cgpa}=req.body;
      const student = await Student.create({
         firstName,
