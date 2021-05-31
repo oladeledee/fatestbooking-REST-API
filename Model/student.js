@@ -32,7 +32,7 @@ const studentsValidate =
         Joi.object({
             firstName: Joi.string().min(3).max(255).required(),
             lastName:Joi.string().min(3).max(225).required(),
-            userName:Joi.string().min(3).required(),
+            userName:Joi.string().min(3).max(30).required(),
             cgpa:Joi.number().required(),
           email:Joi.string().min(5).max(225).required().email(),
         });
