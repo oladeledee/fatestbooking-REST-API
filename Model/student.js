@@ -1,6 +1,6 @@
 const  mongoose = require ('mongoose');
-
-
+const Joi= require ('joi);
+                    
 const studentSchema = new mongoose.Schema({
     firstName:{
         type: String,
@@ -27,6 +27,16 @@ const studentSchema = new mongoose.Schema({
         required:true
     }
 })
-
+// student validation
+const studentsValidate = 
+        Joi.object({
+            firstName: Joi.string().min(3).max(255).required(),
+            lastName:Joi.string().min(3).max(225).required(),
+            userName:Joi.string().min(3).required(),
+            cgpa:Joi.number().required(),
+          email:Joi.string().min(5).max(225).required().email(),
+        });
+  
 
 module.exports = mongoose.model('Student', studentSchema);
+exports.studentsValidate=studentsValidate;
