@@ -5,7 +5,7 @@ module.exports = {
   create: async(req,res)=>{
 try {
   let student_Id=  req.params.id;
-    const student= await Student.findOne(student_Id).populate('student');
+    const student= await Student.findOne(student_Id);
     console.log(student);
     if(student){ 
       const{program,semester}= req.body;
